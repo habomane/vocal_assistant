@@ -13,7 +13,8 @@ class MainApp:
         self.todo_manager = tdmanager.ToDoManager()
 
     def run(self):
-        pass
+        while True:
+            command = self.speech_processor.listen()
 
 
 if __name__ == "__main__":
