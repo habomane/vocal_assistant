@@ -15,9 +15,19 @@ class MainApp:
     def run(self):
         while True:
             command = self.speech_processor.listen()
-            if command != "":
+            if command == "get current to-do list":
+                todo_list = self.todo_manager.get_todo_list_str()
+                self.speech_processor.speak(todo_list)
+
+            elif command != "":
+                ##get inquiry type
+                label = self.command_processor.handle_command(command)
+                if label != "normal":
+                    self.todo_manager.add_to_todo_list(command)
+
+                ##get API response 
                 response = self.openai_agent.get_response(command)
-                print("ChatGPT answered:", response)
+                self.speech_processor.speak(response)
             
 
 
