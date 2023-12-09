@@ -9,8 +9,12 @@ class SpeechProcessing:
     def listen(self):
         with sr.Microphone() as source:
             print("Listening...")
-            self.recongizer.adjust_for_ambient_noise(source)
-            audio = self.recongizer.listen(source)
+            audio = None
+            self.recongizer.adjust_for_ambient_noise(source, duration=1)
+            try:
+                audio = self.recongizer.listen(source, timeout=5)
+            except sr.WaitTimeoutError:
+                print("Are you speaking?")
             text = ""
             
             try: 
@@ -23,6 +27,8 @@ class SpeechProcessing:
                 print("Could not complete error")
             except Exception:
                 print("There was an error")
+            
+
 
             return text
 
