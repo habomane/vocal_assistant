@@ -15,6 +15,10 @@ class MainApp:
     def run(self):
         while True:
             command = self.speech_processor.listen()
+            if command != "":
+                response = self.openai_agent.get_response(command)
+                print("ChatGPT answered:", response)
+            
 
 
 if __name__ == "__main__":
